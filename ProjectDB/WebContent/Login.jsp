@@ -9,8 +9,8 @@
 <body>	
 <h1>LOGIN</h1>
         <form action="login" method="GET">
-        	Email/Username: <input type = "text" name = "email"> <br>
-        	Password: <input type = "text" name = "password" /> <input type = "submit" value = "submit" />
+        	Email: <input type = "text" name = "email"> <br>
+        	Password: <input type = "password" name = "password" /> <input type = "submit" value = "submit" />
         </form>
 </body>
 </html>
