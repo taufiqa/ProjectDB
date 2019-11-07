@@ -14,10 +14,17 @@ import javax.servlet.http.HttpSession;
 public class ControlServlet extends HttpServlet
 {
 	private UserDAO userDAO;
+	private CategoriesDAO categoriesDAO;
+	private ItemsDAO itemsDAO;
+	private ReviewsDAO reviewsDAO;
 
 	public void init()
 	{
 		userDAO = new UserDAO();
+		categoriesDAO = new CategoriesDAO();
+		itemsDAO = new ItemsDAO();
+		reviewsDAO = new ReviewsDAO();
+
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
@@ -50,8 +57,14 @@ public class ControlServlet extends HttpServlet
 	private void initializeDatabase(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
 	{
 		userDAO.createDatabase();
-		
+		categoriesDAO.createDatabase();
+		itemsDAO.createDatabase();
+		reviewsDAO.createDatabase();
+
 		userDAO.seedDatabase();
+		categoriesDAO.seedDatabase();
+		itemsDAO.seedDatabase();
+		reviewsDAO.seedDatabase();
 		
 		response.sendRedirect("Login.jsp");
 	}
