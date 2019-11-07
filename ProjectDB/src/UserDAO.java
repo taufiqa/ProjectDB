@@ -48,18 +48,18 @@ public class UserDAO extends HttpServlet {
             }
 			connect = (Connection) DriverManager
 					.getConnection("jdbc:mysql://127.0.0.1:3306/projectdb?"
-					          + "user=root&password=goldPa!nt51");
+					          + "user=root&password=Sql786!!");
 			System.out.println(connect);
         }
 	}
 	
-	public boolean isUserValid(String username, String password) {
+	public boolean isUserValid(String email, String password) {
 		boolean flag = false;
 		try {
 			connect_func();
 			statement = (Statement) connect.createStatement();
 			
-			String sqlstmt = "SELECT * FROM Users WHERE email ='" + username + "' AND password = '" + password + "'";
+			String sqlstmt = "SELECT * FROM Users WHERE email ='" + email + "' AND password = '" + password + "'";
 			ResultSet rs = statement.executeQuery(sqlstmt);
 			
 			if(rs.next())
@@ -84,7 +84,7 @@ public class UserDAO extends HttpServlet {
 			statement.executeUpdate("DROP TABLE IF EXISTS User");
 			statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");
 			
-			String sqlstmt = "CREATE TABLE IF NOT EXISTS Users(" +
+			String sqlstmt = "CREATE TABLE IF NOT EXISTS users(" +
 								  " UserId INTEGER not NULL AUTO_INCREMENT, " +
 								  " Password VARCHAR(20) not NULL, " +
 								  " FirstName VARCHAR(20) not NULL, " +
@@ -92,8 +92,7 @@ public class UserDAO extends HttpServlet {
 								  " Email VARCHAR(50), " +
 								  " Gender VARCHAR(30) not NULL, " +
 								  " Age VARCHAR(20) not NULL, " +
-								  " PRIMARY KEY (userId), " + 
-								  " UNIQUE KEY (userName), " +
+								  " PRIMARY KEY (userId), " +
 								  " UNIQUE KEY (email));";
 			statement.executeUpdate(sqlstmt);
 		} catch (Exception e) {

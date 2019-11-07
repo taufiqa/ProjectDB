@@ -1,6 +1,9 @@
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.DriverManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List; 
@@ -38,6 +41,8 @@ public class ControlServlet extends HttpServlet
 	            case "/login":
 	            	login(request, response);
 	            	break;
+	            case "/register":
+	            	register(request,response);
 	            default:
 	            	break;
             }
@@ -59,12 +64,41 @@ public class ControlServlet extends HttpServlet
 	
 	public void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
 	{
-		String username = request.getParameter("email");
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		if(userDAO.isUserValid(username,password))
+		if(userDAO.isUserValid(email,password))
 			response.sendRedirect("StorePage.jsp");
 		else
 			response.sendRedirect("Login.jsp");
 	}
+	
+	public void register(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
+	{
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		int age = Integer.parseInt(request.getParameter("age"));
+		char gender = request.getParameter("gender").charAt(0); 
+		
+		response.sendRedirect("Login.jsp"); //redirect immediately to login page to allow user to login
+		
+		try
+		{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb", "root", "Sql786!!");
+		Statement st=connect.createStatement();
+
+		int i=st.executeUpdate("insert into users(firstName,lastName,password,email,age,gender)values('" + firstName + "','" + lastName + "','" + password + "','" + email + "','" + age + "','" + gender +"')");
+		
+		}
+		catch(Exception e)
+		{
+		System.out.print(e);
+		e.printStackTrace();
+		}
+		
+	}
+	
 }
