@@ -1,47 +1,71 @@
 
 public class Reviews
 {	
-	protected int reviewId;
-	protected String password;
-	protected String email;
+	protected String score;
+	protected String remark;
+	protected int itemID;
+	protected int userID;
+	//protected Date reviewDate;
 
 	public Reviews() 
 	{
 	}
 	
-	public Reviews(int reviewId, String password,String email)
+	public Reviews(int reviewID, String score, String remark, int itemID, int userID)
 	{
-		this.password = password;
-		this.email = email;
+		this.score = score;
+		this.remark = remark;
+		this.itemID = itemID;
+		this.userID = userID;
 	}
 	
-	public int getReviewId()
+	public int getReviewID()
 	{
-		return reviewId;
+		return userID;
 	}
 	
-	public void setReviewId(int reviewId)
+	public void setReviewID(int reviewID)
 	{
-		this.reviewId = reviewId;
+		this.userID = reviewID;
 	}
 	
-	public String getPassword()
+	public String getScore()
 	{
-		return password;
+		return score;
 	}
 	
-	public void setPassword(String password)
+	public void setScore(String score)
 	{
-		this.password = password;
+		this.score = score;
 	}
 	
-	public String getEmail()
+	public String getRemark()
 	{
-		return email;
+		return remark;
 	}
 	
-	public void setEmail(String email)
+	public void setRemark(String remark)
 	{
-		this.email = email;
+		this.remark = remark;
+	}
+	
+	public int getItemID()
+	{
+		return itemID;
+	}
+	
+	public void setItemID(int itemID)
+	{
+		this.itemID = itemID;
+	}
+	
+	public int getUserID()
+	{
+		return userID;
+	}
+	
+	public void setUserID(int userID)
+	{
+		this.userID = userID;
 	}
 }

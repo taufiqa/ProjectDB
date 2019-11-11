@@ -90,7 +90,7 @@ public class ReviewsDAO extends HttpServlet {
 								  " remark VARCHAR(75)," + 
 								  " itemID integer," + 
 								  " userID integer," + 
-								  " reviewDate DATE," + 
+								//  " reviewDate DATE," + 
 								  " PRIMARY KEY (reviewID));";
 			statement.executeUpdate(sqlstmt);
 		} catch (Exception e) {
@@ -108,13 +108,15 @@ public class ReviewsDAO extends HttpServlet {
 			
 			statement = connect.createStatement();
 			
-			preparedStatement = connect.prepareStatement("insert into reviews(score,remark,itemID,userID, reviewDate) values (?,?,?,?,?)");
+		//	preparedStatement = connect.prepareStatement("insert into reviews(score,remark,itemID,userID, reviewDate) values (?,?,?,?,?)");
+			preparedStatement = connect.prepareStatement("insert into reviews(score,remark,itemID,userID) values (?,?,?,?)");
+
 			
 			preparedStatement.setString(1, "Five");
 			preparedStatement.setString(2, "Good");
 			preparedStatement.setInt(3, 1);
 			preparedStatement.setInt(4, 1);
-			preparedStatement.setString(5, "11-6-2019");
+		//	preparedStatement.setString(5, "11-6-2019");
 			preparedStatement.executeUpdate();
 			
 		/*	preparedStatement.setString(1, "password");

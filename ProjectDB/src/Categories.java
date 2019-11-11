@@ -1,59 +1,47 @@
 
 public class Categories
 {	
-	protected int categoriesId;
-	protected String categoriesName;
-	protected String password;
-	protected String email;
+	protected int categoryID;
+	protected String categoryName;
+	protected int itemID;
 
 	public Categories() 
 	{
 	}
 	
-	public Categories(int categoriesId, String categoriesName, String password,String email)
+	public Categories(int categoryID, String categoryName, int itemID)
 	{
-		this.categoriesName = categoriesName;
-		this.password = password;
-		this.email = email;
+		this.categoryName = categoryName;
+		this.itemID = itemID;
 	}
 	
-	public int getCategoriesId()
+	public int getCategoryID()
 	{
-		return categoriesId;
+		return categoryID;
 	}
 	
-	public void setCategoriesId(int categoriesId)
+	public void setCategoryID(int categoryID)
 	{
-		this.categoriesId = categoriesId;
+		this.categoryID = categoryID;
 	}
 	
-	public String getCategoriesName()
+	public String getCategoryName()
 	{
-		return categoriesName;
+		return categoryName;
 	}
 	
-	public void setCategoriesName(String categoriesName)
+	public void setCategoryName(String categoryName)
 	{
-		this.categoriesName = categoriesName;
+		this.categoryName = categoryName;
 	}
 	
-	public String getPassword()
+	public int getItemID()
 	{
-		return password;
+		return itemID;
 	}
 	
-	public void setPassword(String password)
+	public void setItemID(int itemID)
 	{
-		this.password = password;
-	}
-	
-	public String getEmail()
-	{
-		return email;
-	}
-	
-	public void setEmail(String email)
-	{
-		this.email = email;
+		this.itemID = itemID;
 	}
 }

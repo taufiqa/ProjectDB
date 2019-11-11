@@ -112,7 +112,7 @@ public class CategoriesDAO extends HttpServlet {
 			preparedStatement = connect.prepareStatement("insert into categories(categoryName,itemID) values (?,?)");
 			
 			preparedStatement.setString(1, "Electronics");
-			preparedStatement.setString(2, "1");
+			preparedStatement.setInt(2, 1);
 			preparedStatement.executeUpdate();
 			
 		/*	preparedStatement.setString(1, "password");

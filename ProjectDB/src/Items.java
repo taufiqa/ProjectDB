@@ -1,60 +1,62 @@
+import java.math.BigDecimal;
+//import java.util.Date;
 
 public class Items
 {	
-	protected int itemId;
-	protected String itemName;
-	protected String password;
-	protected String email;
+	protected int itemID;
+	protected String title;
+	protected String itemDescription;
+	//protected Date postDate;
+	protected BigDecimal price;
 
 	public Items() 
 	{
 	}
 	
-	public Items(int itemId, String itemName, String password,String email)
+	public Items(int itemID, String title, String itemDescription,BigDecimal price)
 	{
-		this.itemName = itemName;
-		this.password = password;
-		this.email = email;
+		this.title = title;
+		this.itemDescription = itemDescription;
+		this.price = price;
 	}
 	
-	public int getItemId()
+	public int getItemID()
 	{
-		return itemId;
+		return itemID;
 	}
 	
-	public void setItemId(int itemId)
+	public void setItemID(int itemID)
 	{
-		this.itemId = itemId;
+		this.itemID = itemID;
 	}
 	
-	public String getItemName()
+	public String getTitle()
 	{
-		return itemName;
+		return title;
 	}
 	
-	public void setItemName(String itemName)
+	public void setTitle(String title)
 	{
-		this.itemName = itemName;
+		this.title = title;
 	}
 	
-	public String getPassword()
+	public String getItemDescription()
 	{
-		return password;
+		return itemDescription;
 	}
 	
-	public void setPassword(String password)
+	public void setItemDescription(String itemDescription)
 	{
-		this.password = password;
+		this.itemDescription = itemDescription;
 	}
 	
-	
-	public String getEmail()
+	public BigDecimal getPrice()
 	{
-		return email;
+		return price;
 	}
 	
-	public void setEmail(String email)
+	public void setPrice(BigDecimal price)
 	{
-		this.email = email;
+		this.price = price;
 	}
 }

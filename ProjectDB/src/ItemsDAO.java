@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -18,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 //import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 /**
  * Servlet implementation class Connect
@@ -110,12 +112,13 @@ public class ItemsDAO extends HttpServlet {
 			
 			statement = connect.createStatement();
 			
-			preparedStatement = connect.prepareStatement("insert into items(title,itemDescription,postDate,price) values (?,?,?,?)");
-			
+		//	preparedStatement = connect.prepareStatement("insert into items(title,itemDescription,postDate,price) values (?,?,?,?)");
+			preparedStatement = connect.prepareStatement("insert into items(title,itemDescription,price) values (?,?,?)");
+
 			preparedStatement.setString(1, "phone");
 			preparedStatement.setString(2, "newphonewhodis");
-			preparedStatement.setString(3, "11-6-2019");
-			preparedStatement.setString(4, "15.00");
+		//	preparedStatement.setDate(3, new java.sql.Date(Date.getTime()));
+			preparedStatement.setDouble(3, 15.00);
 			preparedStatement.executeUpdate();
 			
 		/*	preparedStatement.setString(1, "password");
@@ -171,4 +174,43 @@ public class ItemsDAO extends HttpServlet {
 			
 		}
 	}
+	/*
+	
+	public List<Items> getItemCategoryList(String category) throws SQLException
+	{
+	    List<Items> itemsByCategory =  new ArrayList<Items>();
+	    String sqlQuery = 
+	           "SELECT *" +
+	            " FROM (items title, categories category)" +
+	            " WHERE (items.itemID = categories.itemID AND categories.categoryName = ?)" +
+	            " ORDER BY items.title";
+	    try {
+	    connect_func();
+		statement = (Statement) connect.createStatement();
+		
+		statement = connect.createStatement();
+		
+		preparedStatement = connect.prepareStatement(sqlQuery);
+		preparedStatement.setString(1, category);
+		ResultSet result = preparedStatement.executeQuery();
+		
+		while (result.next())
+		{
+			int itemID = result.getInt("itemID");
+			String title = result.getString("title");
+			String itemDescription = result.getString("itemDescription");
+		//	java.sql.Date jokePostDate =  result.getDate("jokePostDate");
+			BigDecimal price = new BigDecimal(result.getDouble("price"));
+			
+			Items items = new Items(itemID, title, itemDescription, price);			
+			itemsByCategory.add(items);
+		}
+	    }catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			close();
+		}
+		return itemsByCategory;
+	}
+	*/
 }
