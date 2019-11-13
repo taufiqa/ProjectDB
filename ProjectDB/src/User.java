@@ -1,40 +1,56 @@
 
 public class User
 {	
-	protected int userId;
-	protected String userName;
+	protected int userID;
+	protected String firstName;
+	protected String lastName;
 	protected String password;
 	protected String email;
+	protected char gender;
+	protected int age;
 
 	public User() 
 	{
 	}
 	
-	public User(int userId, String userName, String password,String email)
+	public User(int userID, String firstName, String lastName, String password,String email, char gender, int age)
 	{
-		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
+		this.gender = gender;
+		this.age = age;
 	}
 	
-	public int getUserId()
+	public int getUserID()
 	{
-		return userId;
+		return userID;
 	}
 	
-	public void setUserId(int userId)
+	public void setUserID(int userID)
 	{
-		this.userId = userId;
+		this.userID = userID;
 	}
 	
-	public String getUserName()
+	public String getFirstName()
 	{
-		return userName;
+		return firstName;
 	}
 	
-	public void setUserName(String userName)
+	public void setFirstName(String firstName)
 	{
-		this.userName = userName;
+		this.firstName = firstName;
+	}
+	
+	public String getLastName()
+	{
+		return lastName;
+	}
+	
+	public void setLastName(String lastName)
+	{
+		this.lastName = lastName;
 	}
 	
 	public String getPassword()
@@ -47,7 +63,6 @@ public class User
 		this.password = password;
 	}
 	
-	
 	public String getEmail()
 	{
 		return email;
@@ -56,5 +71,25 @@ public class User
 	public void setEmail(String email)
 	{
 		this.email = email;
+	}
+	
+	public char getGender()
+	{
+		return gender;
+	}
+	
+	public void setGender(char gender)
+	{
+		this.gender = gender;
+	}
+	
+	public int getAge()
+	{
+		return age;
+	}
+	
+	public void setAge(int age)
+	{
+		this.age = age;
 	}
 }

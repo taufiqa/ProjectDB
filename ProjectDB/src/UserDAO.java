@@ -81,20 +81,20 @@ public class UserDAO extends HttpServlet {
 			
 			statement = connect.createStatement();
 			statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");
-			statement.executeUpdate("DROP TABLE IF EXISTS User");
+			statement.executeUpdate("DROP TABLE IF EXISTS Users");
 			statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");
 			
 			String sqlstmt = "CREATE TABLE IF NOT EXISTS Users(" +
-								  " UserId INTEGER not NULL AUTO_INCREMENT, " +
-								  " Password VARCHAR(20) not NULL, " +
-								  " FirstName VARCHAR(20) not NULL, " +
-								  " LastName VARCHAR(20) not NULL, " +
-								  " Email VARCHAR(50), " +
-								  " Gender VARCHAR(30) not NULL, " +
-								  " Age VARCHAR(20) not NULL, " +
-								  " PRIMARY KEY (userId), " + 
-								  " UNIQUE KEY (userName), " +
-								  " UNIQUE KEY (email));";
+								  " userID INTEGER NOT NULL auto_increment," + 
+								  " firstName VARCHAR(25)," + 
+								  " lastName VARCHAR(25)," + 
+								  " password VARCHAR(8)," + 
+								  " email VARCHAR(25)," + 
+								  " gender CHAR(2)," + 
+								  " age INTEGER," + 
+								  " PRIMARY KEY(userID)," + 
+								  " CHECK (gender IN ('M', 'F'))" + 
+								  ");";
 			statement.executeUpdate(sqlstmt);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -111,7 +111,7 @@ public class UserDAO extends HttpServlet {
 			
 			statement = connect.createStatement();
 			
-			preparedStatement = connect.prepareStatement("insert into Users(firstName,lastName,password,email, age) values (?,?,?,?,?)");
+			preparedStatement = connect.prepareStatement("insert into users(firstName,lastName,password,email,gender, age) values (?,?,?,?,?,?)");
 			
 			preparedStatement.setString(1, "Root");
 			preparedStatement.setString(2, "User");
@@ -121,38 +121,38 @@ public class UserDAO extends HttpServlet {
 			preparedStatement.setString(6, "45");
 			preparedStatement.executeUpdate();
 			
-		/*	preparedStatement.setString(1, "password");
-			preparedStatement.setString(2, "John");
-			preparedStatement.setString(3, "Doe");
-			preparedStatement.setString(4, "johndoe@gmail.com");
-			preparedStatement.setString(5, "Male");
-			preparedStatement.setString(6, "25");
-			preparedStatement.executeUpdate();
-			
-			preparedStatement.setString(1, "random");
-			preparedStatement.setString(2, "Nuha");
-			preparedStatement.setString(3, "Malik");
+			preparedStatement.setString(1, "Nuha");
+			preparedStatement.setString(2, "Malik");
+			preparedStatement.setString(3, "random");
 			preparedStatement.setString(4, "nuhamal@gmail.com");
-			preparedStatement.setString(5, "Female");
+			preparedStatement.setString(5, "F");
 			preparedStatement.setString(6, "70");
 			preparedStatement.executeUpdate();
 			
-			preparedStatement.setString(1, "randomm");
-			preparedStatement.setString(2, "Anika");
-			preparedStatement.setString(3, "Taufiq");
+			preparedStatement.setString(1, "Anika");
+			preparedStatement.setString(2, "Taufiq");
+			preparedStatement.setString(3, "randomm");
 			preparedStatement.setString(4, "taufiqa@gmail.com");
-			preparedStatement.setString(5, "Female");
+			preparedStatement.setString(5, "F");
 			preparedStatement.setString(6, "50");
 			preparedStatement.executeUpdate();
 			
-			preparedStatement.setString(1, "gr8Respgr8Pwr");
-			preparedStatement.setString(2, "Tom");
-			preparedStatement.setString(3, "Holland");
+			preparedStatement.setString(1, "Tom");
+			preparedStatement.setString(2, "Holland");
+			preparedStatement.setString(3, "avengers");
 			preparedStatement.setString(4, "imspiderman@gmail.com");
-			preparedStatement.setString(5, "Male");
+			preparedStatement.setString(5, "M");
 			preparedStatement.setString(6, "18");
 			preparedStatement.executeUpdate();
-			*/
+			
+			preparedStatement.setString(1, "Tony");
+			preparedStatement.setString(2, "Stark");
+			preparedStatement.setString(3, "ily3000");
+			preparedStatement.setString(4, "imtony@gmail.com");
+			preparedStatement.setString(5, "M");
+			preparedStatement.setString(6, "50");
+			preparedStatement.executeUpdate();
+			
 		}catch (Exception e) {
 			System.out.println(e);
 		} finally {

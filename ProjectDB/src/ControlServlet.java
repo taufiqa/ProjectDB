@@ -1,4 +1,8 @@
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.DriverManager;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -14,10 +18,17 @@ import javax.servlet.http.HttpSession;
 public class ControlServlet extends HttpServlet
 {
 	private UserDAO userDAO;
+	private CategoriesDAO categoriesDAO;
+	private ItemsDAO itemsDAO;
+	private ReviewsDAO reviewsDAO;
 
 	public void init()
 	{
 		userDAO = new UserDAO();
+		categoriesDAO = new CategoriesDAO();
+		itemsDAO = new ItemsDAO();
+		reviewsDAO = new ReviewsDAO();
+
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
@@ -38,6 +49,12 @@ public class ControlServlet extends HttpServlet
 	            case "/login":
 	            	login(request, response);
 	            	break;
+	            case "/register":
+	            	register(request,response);
+	            	break;
+	            case "/newItem":
+	            	newItem(request,response);
+	            	break;
 	            default:
 	            	break;
             }
@@ -50,21 +67,105 @@ public class ControlServlet extends HttpServlet
 	private void initializeDatabase(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
 	{
 		userDAO.createDatabase();
-		
+		itemsDAO.createDatabase();
+		reviewsDAO.createDatabase();
+		categoriesDAO.createDatabase();
+
 		userDAO.seedDatabase();
-		
-		response.sendRedirect("Login.jsp");
+		itemsDAO.seedDatabase();
+		reviewsDAO.seedDatabase();
+		categoriesDAO.seedDatabase();
+
+		response.sendRedirect("index.jsp");
 	}
 	
 	
 	public void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
 	{
-		String username = request.getParameter("email");
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		if(userDAO.isUserValid(username,password))
+		if(userDAO.isUserValid(email,password))
 			response.sendRedirect("StorePage.jsp");
 		else
 			response.sendRedirect("Login.jsp");
 	}
+	
+	public void register(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
+	{
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		int age = Integer.parseInt(request.getParameter("age"));
+		char gender = request.getParameter("gender").charAt(0); 
+
+		response.sendRedirect("Login.jsp"); //redirect immediately to login page to allow user to login
+
+		try
+		{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectDB?", "root", "goldPa!nt51");
+		Statement st=connect.createStatement();
+
+		int i=st.executeUpdate("insert into users(firstName,lastName,password,email,age,gender)values('" + firstName + "','" + lastName + "','" + password + "','" + email + "','" + age + "','" + gender +"')");
+
+		}
+		catch(Exception e)
+		{
+		System.out.print(e);
+		e.printStackTrace();
+		}
+
+	}
+	
+	public void newItem(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
+	{
+		String title = request.getParameter("title");
+		String itemDescription = request.getParameter("itemDescription");
+	//	String categoryName = request.getParameter("categoryName");
+        Double price = Double.parseDouble(request.getParameter("price"));
+
+		response.sendRedirect("success.jsp"); //redirect immediately to success page
+		
+		try
+		{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectDB?", "root", "goldPa!nt51");
+		Statement st=connect.createStatement();
+
+		int i=st.executeUpdate("insert into items(title,itemDescription,price)values('" + title + "','" + itemDescription + "','" + price + "')");
+		// int j=st.executeUpdate("INSERT INTO joke(joke_text, joke_date, author_id) VALUES (‘Humpty Dumpty had a great fall.’, ‘1899–03–13’, (SELECT id FROM author WHERE author_name = ‘Famous Anthony’));;
+	//	int j = st.executeUpdate("insert into categories(categoryName,itemID)values('" + categoryName + "','" + (SELECT itemID FROM items WHERE itemID = itemID) + "')");
+		}
+		catch(Exception e)
+		{
+		System.out.print(e);
+		e.printStackTrace();
+		}
+
+	}
+/*
+	private void searchCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
+	{
+		List<Items> itemsList = new ArrayList<Items>();
+		
+		String category = request.getParameter("searchCategory");
+		
+		itemsList = ItemsDAO.getItemCategoryList(category);
+		
+		if (!category.isEmpty())
+		{
+			request.setAttribute("searchCategory", category);
+			
+			System.out.println("if statement");
+			//listItem(request, response, itemsList, null);
+		}
+		else
+		{
+			System.out.println("else statement");
+			//allItems(request, response);
+		}
+	}
+	*/
 }
