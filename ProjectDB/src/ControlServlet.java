@@ -3,6 +3,8 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -17,10 +19,13 @@ import javax.servlet.http.HttpSession;
 
 public class ControlServlet extends HttpServlet
 {
+	User user = new User();
 	private UserDAO userDAO;
 	private CategoriesDAO categoriesDAO;
 	private ItemsDAO itemsDAO;
 	private ReviewsDAO reviewsDAO;
+	private PreparedStatement preparedStatement = null;
+	private static ResultSet resultSet = null;
 
 	public void init()
 	{
@@ -82,8 +87,12 @@ public class ControlServlet extends HttpServlet
 	
 	public void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
 	{
+		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		
+		user.setEmail(email);
+		user.setPassword(password);
 		
 		if(userDAO.isUserValid(email,password))
 			response.sendRedirect("StorePage.jsp");
@@ -100,12 +109,20 @@ public class ControlServlet extends HttpServlet
 		int age = Integer.parseInt(request.getParameter("age"));
 		char gender = request.getParameter("gender").charAt(0); 
 
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setEmail(email);
+		user.setPassword(password);
+		user.setAge(age);
+		user.setGender(gender);
+		
+		
 		response.sendRedirect("Login.jsp"); //redirect immediately to login page to allow user to login
 
 		try
 		{
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectDB?", "root", "goldPa!nt51");
+		Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb?", "root", "Sql786!!");
 		Statement st=connect.createStatement();
 
 		int i=st.executeUpdate("insert into users(firstName,lastName,password,email,age,gender)values('" + firstName + "','" + lastName + "','" + password + "','" + email + "','" + age + "','" + gender +"')");
@@ -123,20 +140,24 @@ public class ControlServlet extends HttpServlet
 	{
 		String title = request.getParameter("title");
 		String itemDescription = request.getParameter("itemDescription");
-	//	String categoryName = request.getParameter("categoryName");
-        Double price = Double.parseDouble(request.getParameter("price"));
-
-		response.sendRedirect("success.jsp"); //redirect immediately to success page
+		LocalDate postDate = LocalDate.now();
+		double price = Double.parseDouble(request.getParameter("price"));
+		String categoryName = request.getParameter("categoryName").toLowerCase();
+		String userEmail = user.getEmail();    
 		
 		try
 		{
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectDB?", "root", "goldPa!nt51");
-		Statement st=connect.createStatement();
-
-		int i=st.executeUpdate("insert into items(title,itemDescription,price)values('" + title + "','" + itemDescription + "','" + price + "')");
-		// int j=st.executeUpdate("INSERT INTO joke(joke_text, joke_date, author_id) VALUES (‘Humpty Dumpty had a great fall.’, ‘1899–03–13’, (SELECT id FROM author WHERE author_name = ‘Famous Anthony’));;
-	//	int j = st.executeUpdate("insert into categories(categoryName,itemID)values('" + categoryName + "','" + (SELECT itemID FROM items WHERE itemID = itemID) + "')");
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb?", "root", "Sql786!!");
+			Statement st=connect.createStatement();
+			
+		int i=st.executeUpdate("insert into items(userEmail,title,itemDescription,postDate,price)values('" + userEmail + "','" +title + "','" + itemDescription + "','" + postDate +"','"+ price + "')");
+		int j = st.executeUpdate("insert into categories(categoryName,itemTitle)values('" + categoryName + "','" + title + "')");
+		
+		if (i != 0)response.sendRedirect("success.jsp");
+		else {
+			response.sendRedirect("error.jsp"); //make an error.jsp
+			}
 		}
 		catch(Exception e)
 		{
