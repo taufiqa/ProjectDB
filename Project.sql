@@ -1,27 +1,30 @@
-CREATE DATABASE onlineStore;
+CREATE DATABASE projectdb;
 
-USE onlineStore;
+USE projectdb;
 
 CREATE TABLE items (
 	itemID INTEGER NOT NULL auto_increment,
+    userEmail VARCHAR(25),
     title VARCHAR(20),
     itemDescription VARCHAR(100),
     postDate DATE,
     price DECIMAL(5, 2),
-    PRIMARY KEY(itemID)
+    PRIMARY KEY(itemID, title)
 );
-
+DELETE FROM categories;
+SELECT * FROM items;
+SELECT * FROM categories;
 CREATE TABLE categories (
 	categoryID INTEGER NOT NULL auto_increment,
     categoryName VARCHAR(15),
-    itemID integer,
-    PRIMARY KEY(categoryID, itemID),
-    FOREIGN KEY (itemID) REFERENCES items(itemID), /*itemID here references itemID in items
+    itemTitle VARCHAR(20),
+    PRIMARY KEY(categoryID, itemTitle)
+    /*FOREIGN KEY (itemTitle) REFERENCES items(title) itemTitle here references title in items
 													table, there will be multiple rows in table 
                                                     categories, one for each item*/
-	CHECK (binary_checksum(categoryName) = binary_checksum(lower(categoryName)))
     /*check to ensure that category names are lowercase*/
 );
+
 CREATE TABLE users (
 	userID INTEGER NOT NULL auto_increment,
     firstName VARCHAR(25),
@@ -40,7 +43,7 @@ CREATE TABLE reviews (
     itemID integer,
     userID integer,
     reviewDate DATE,
-    PRIMARY KEY (reviewID),
-    CHECK (((SELECT COUNT (userID) FROM reviews) <= 5) WHILE reviewDate )
+    PRIMARY KEY (reviewID)
 );
 SELECT * FROM users;
+DELETE FROM items; DELETE FROM categories;
