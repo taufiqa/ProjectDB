@@ -5,11 +5,12 @@
 <html>
 <head>
     <title>SUCCESS!</title>
+    <meta http-equiv="refresh" content="2;url=StorePage.jsp" />
 </head>
 <body>
     <center>
         <h1>Item inserted into items table</h1>
+        <h2> Redirecting to homepage...</h2>
         </center>
-		
 </body>
 </html>
