@@ -22,13 +22,16 @@ select * from users;
 
 CREATE TABLE items (
 	itemID INTEGER NOT NULL auto_increment,
+    userID INTEGER,
     title VARCHAR(20),
     itemDescription VARCHAR(100),
-   /* postDate DATE, */
-    price DECIMAL(5, 2),
-    PRIMARY KEY(itemID)
+    postDate DATE, 
+    price DECIMAL(9, 2),
+    categoryName VARCHAR(30),
+    PRIMARY KEY(itemID),
+    FOREIGN KEY(userID) REFERENCES users(userID)
 );
-set foreign_key_checks = 1;
+set foreign_key_checks = 0;
 drop table items;
 DELETE FROM items;
 select * from items;
@@ -36,17 +39,14 @@ select * from items;
 CREATE TABLE categories (
 	categoryID INTEGER NOT NULL auto_increment,
     categoryName VARCHAR(15),
-    itemID integer,
-    PRIMARY KEY(categoryID, itemID),
-    FOREIGN KEY (itemID) REFERENCES items(itemID) /*itemID here references itemID in items
-													table, there will be multiple rows in table 
-                                                    categories, one for each item*/
-	/*CHECK (binary_checksum(categoryName) = binary_checksum(lower(categoryName))) */
-    /*check to ensure that category names are lowercase*/
+    itemTitle VARCHAR(20),
+    PRIMARY KEY(categoryID, itemTitle)
 );
 drop table categories;
 DELETE FROM categories;
 select * from categories;
+
+SELECT * FROM Items INNER JOIN categories ON Items.title = Categories.itemTitle;
 
 CREATE TABLE reviews (
 	reviewID INTEGER NOT NULL auto_increment,
@@ -54,9 +54,10 @@ CREATE TABLE reviews (
     remark VARCHAR(75),
     itemID integer,
     userID integer,
-   /* reviewDate DATE, */
-    PRIMARY KEY (reviewID)
-    /*CHECK (((SELECT COUNT (userID) FROM reviews) <= 5))*/
+    reviewDate DATE, 
+    PRIMARY KEY (reviewID),
+    FOREIGN KEY (userID) REFERENCES users(userID),
+    FOREIGN KEY (itemID) REFERENCES items(itemID)
 );
 drop table reviews;
 DELETE FROM reviews;
