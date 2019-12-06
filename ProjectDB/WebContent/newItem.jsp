@@ -8,7 +8,7 @@
 </head>
 <body >	
 <h1 style= "background-color:#335B78; color:#C4D8E6; text-align: center">Add New Item</h1> 
-  <form action="newItem" method="POST">
+	<form name="newItem" class="form-controls" method="POST" action="ControlServlet?action=newItem&userID=${userID}&userName=${userName}">
     <table style = "color:#335B78; margin-left:auto; margin-right:auto;" width = "50%" >
     	<tr>
         	<th width = "50%"> Title: </th>
@@ -17,6 +17,10 @@
       <tr>
 	     <th width = "50%">Description:</th>
 		 <td width = "100%"><input type = "text" name = "itemDescription"></td>
+	  </tr>
+	  <tr>
+	     <th width = "50%">Category:</th>
+		 <td width = "100%"><input type = "text" name = "categoryName"></td>
 	  </tr>
 	  <tr>
 	     <th width = "50%">Price:</th>
