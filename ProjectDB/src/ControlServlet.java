@@ -180,113 +180,47 @@ public class ControlServlet extends HttpServlet
 	private void search(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException
 	{
 		
-		String category = request.getParameter("searchCategory");
+		String category = request.getParameter("searchCategory").toLowerCase();
 		
-		//take the category they searched for and look in the items table
+		
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
+			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb?", "root", "Sql786!!");
 		
-		Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb?", "root", "Sql786!!");
-		PrintWriter printOut = response.getWriter();
+			PrintWriter printOut = response.getWriter();
+			
+			String searchQuery = "SELECT * FROM items WHERE categoryName LIKE'%" + category + "%'";    
+			preparedStatement = (PreparedStatement)connect.prepareStatement(searchQuery);	
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			java.sql.ResultSetMetaData metaData = resultSet.getMetaData();
+			int columnCount = metaData.getColumnCount();
 		
-String searchQuery = "select * from items where categoryName = ?";    
-		
-		preparedStatement = (PreparedStatement)connect.prepareStatement(searchQuery);	
-		preparedStatement.setString(1, category);
-		
-		ResultSet resultSet = preparedStatement.executeQuery();
-		
-		java.sql.ResultSetMetaData metaData = resultSet.getMetaData();
-		int columnCount = metaData.getColumnCount();
-		
-
-		response.setContentType("text/html");
-		
-		for (int j = 2; j < columnCount + 1; j++)
-		{
-			printOut.print(metaData.getColumnName(j) + "   ");
-		}
-		
-		printOut.println();
-		
-		
-		//trying to parse category
-		String selectQuery = "select categoryName from items";
-		PreparedStatement preparedStatement1 = (PreparedStatement)connect.prepareStatement(selectQuery);
-		ResultSet resultSet1 = preparedStatement1.executeQuery();
-		java.sql.ResultSetMetaData metaData1 = resultSet1.getMetaData();
-		int columnCount1 = metaData1.getColumnCount();
-		
-		String smth = "";
-		while (resultSet1.next())
-		{
-			for (int j = 0; j < columnCount1; j++)
+			for (int j = 2; j < columnCount + 1; j++)
 			{
-				String columnValue1 = resultSet1.getString(j);
-				for (int i = 0; i < columnValue1.length(); i++)
-				{
-					if (columnValue1.charAt(i) != ',')
-					{
-						smth += columnValue1.charAt(i);
-					}
-					if (smth == category)
-					{
-						for (int k = 2; k < columnCount + 1; k++)
-						{
-							String columnValue = resultSet.getString(k);
-							printOut.print(columnValue + "   ");
-						}
-					}
-				}
+				printOut.print(metaData.getColumnName(j) + "   ");
 			}
-		}
-		
-
-		//current functionality
-		
-
-		/*
-		 * for (int j = 2; j < columnCount + 1; j++)
-		{
-			printOut.print(metaData.getColumnName(j) + "   ");
-		}
-		
-		printOut.println();
-		
-		 * while (resultSet.next())
-		{
-			for (int k = 2; k < columnCount + 1; k++)
-			{
-				String columnValue = resultSet.getString(k);
-				printOut.print(columnValue + "   ");
-			}
+			
 			printOut.println();
-		}*/
-		
-		//response.sendRedirect("StorePage.jsp");
-		
+			
+			while (resultSet.next())
+			{
+				for (int k = 2; k < columnCount + 1; k++)
+				{
+					String columnValue = resultSet.getString(k);
+					printOut.print(columnValue + "   ");
+				}
+				printOut.println();
+			}
+			
 		}
 		
 		catch(Exception e)
 		{
-		System.out.print(e);
-		e.printStackTrace();
+			System.out.print(e);
+			e.printStackTrace();
 		}
-		/*itemsList = ItemsDAO.getItemCategoryList(category);
-		
-		if (!category.isEmpty())
-		{
-			request.setAttribute("searchCategory", category);
-			
-			System.out.println("if statement");
-			//listItem(request, response, itemsList, null);
-		}
-		else
-		{
-			System.out.println("else statement");
-			//allItems(request, response);
-		}*/
 		
 	}
 	
