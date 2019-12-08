@@ -33,9 +33,66 @@ li a:hover {
   background-color: #C4D8E6;
 }
 
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display:block;}
+
 </style>
 </head>
 <body>
+<script>
+
+function myItemFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");}
+function myUserFunction() {
+	  document.getElementById("myDropdown1").classList.toggle("show");}
+  
+window.onclick = function(event) {
+	  if (!event.target.matches('.dropbtn')) {
+	    var dropdowns = document.getElementsByClassName("dropdown-content");
+	    var i;
+	    for (i = 0; i < dropdowns.length; i++) {
+	      var openDropdown = dropdowns[i];
+	      if (openDropdown.classList.contains('show')) {
+	        openDropdown.classList.remove('show');
+	      }
+	    }
+	  }
+	}
+</script>
 
 <h1 style="color:#335B78;text-align:center;">WELCOME TO STORE</h3> 
 	<table>
@@ -69,9 +126,9 @@ li a:hover {
 	<!-- <label id="name1label"> </label>-->
 	
 	<table>	
-        <th>
-            <td>User Email</td> 
+        <th> 
             <td>Title</td>
+            <td>User Email</td>
             <td>Item Description</td>
             <td>Post Date</td>
             <td>Price ($)</td>
@@ -79,9 +136,23 @@ li a:hover {
         </th>
         
     <c:forEach items="${rows}" var="row">
-        <tr>
-            <td>${row.userEmail}</td>
-            <td>${row.title}</td>
+        <tr>     
+        <td><div class="dropdown">
+           <button onclick="myItemFunction()" class="dropbtn"> ${row.title}</button>
+  				<div id="myDropdown" class="dropdown-content">
+    				 <a href="postReview.jsp">Post Review of Item</a>
+    				 <a href="favoriteItems.jsp">Add to Favorite Items List</a> 				 
+  				</div>
+			</div>
+			</td>
+			
+			<td><div class="dropdown">
+           <button onclick="myUserFunction()" class="dropbtn">${row.userEmail}</button>
+  				<div id="myDropdown1" class="dropdown-content">
+    				 <a href="favoriteSellers.jsp">Add to Favorite Sellers List</a>
+  				</div>
+			</div>   
+			</td> 
             <td>${row.itemDescription}</td>
             <td>${row.postDate}</td>
             <td>${row.price}</td>
