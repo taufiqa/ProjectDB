@@ -50,34 +50,11 @@ public class ItemsDAO extends HttpServlet {
             }
 			connect = (Connection) DriverManager
 					.getConnection("jdbc:mysql://127.0.0.1:3306/projectdb?"
-					          + "user=root&password=goldPa!nt51");
+					          + "user=john&password=pass1234");
 			System.out.println(connect);
         }
 	}
-	/*
-	
-	public boolean isUserValid(String username, String password) {
-		boolean flag = false;
-		try {
-			connect_func();
-			statement = (Statement) connect.createStatement();
-			
-			String sqlstmt = "SELECT * FROM Users WHERE email ='" + username + "' AND password = '" + password + "'";
-			ResultSet rs = statement.executeQuery(sqlstmt);
-			
-			if(rs.next())
-				flag = true;
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			close();
-		}
-		
-		return flag; //returns true if user exists returns false if user doesn't exist
-	}
-	
-	*/
-    
+
 	public void createDatabase() throws SQLException
 	{
 		try{
@@ -91,11 +68,14 @@ public class ItemsDAO extends HttpServlet {
 			
 			String sqlstmt = "CREATE TABLE IF NOT EXISTS items(" +
 								  " itemID INTEGER NOT NULL auto_increment," + 
+								  " userEmail VARCHAR(25)," + 
 								  " title VARCHAR(20)," + 
 								  " itemDescription VARCHAR(100)," + 
 								  " postDate DATE," + 
-								  " price DECIMAL(5, 2)," + 
-								  " PRIMARY KEY(itemID));";
+								  " price DECIMAL(9, 2)," + 
+								  " categoryName VARCHAR(75)," +
+								  " PRIMARY KEY(itemID)" + 
+								  " );";
 			statement.executeUpdate(sqlstmt);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -112,47 +92,89 @@ public class ItemsDAO extends HttpServlet {
 			
 			statement = connect.createStatement();
 			
-		//	preparedStatement = connect.prepareStatement("insert into items(title,itemDescription,postDate,price) values (?,?,?,?)");
-			preparedStatement = connect.prepareStatement("insert into items(title,itemDescription,price) values (?,?,?)");
+			preparedStatement = connect.prepareStatement("insert into items(userEmail,title,itemDescription,postDate,price,categoryName) values (?,?,?,?,?,?)");
 
-			preparedStatement.setString(1, "phone");
-			preparedStatement.setString(2, "newphonewhodis");
-		//	preparedStatement.setDate(3, new java.sql.Date(Date.getTime()));
-			preparedStatement.setDouble(3, 15.00);
+			preparedStatement.setString(1, "root@gmail.com");
+			preparedStatement.setString(2, "iphone");
+			preparedStatement.setString(3, "whodis?");
+			preparedStatement.setString(4, "2019-11-06");
+			preparedStatement.setDouble(5, 15.00);
+			preparedStatement.setString(6, "electronics,phone");
 			preparedStatement.executeUpdate();
 			
-		/*	preparedStatement.setString(1, "password");
-			preparedStatement.setString(2, "John");
-			preparedStatement.setString(3, "Doe");
-			preparedStatement.setString(4, "johndoe@gmail.com");
-			preparedStatement.setString(5, "Male");
-			preparedStatement.setString(6, "25");
+			preparedStatement.setString(1, "root@gmail.com");
+			preparedStatement.setString(2, "tesla");
+			preparedStatement.setString(3, "v cool car");
+			preparedStatement.setString(4, "2019-11-06");
+			preparedStatement.setDouble(5, 1000.00);
+			preparedStatement.setString(6, "electronics,car,auto,automobile");
 			preparedStatement.executeUpdate();
 			
-			preparedStatement.setString(1, "random");
-			preparedStatement.setString(2, "Nuha");
-			preparedStatement.setString(3, "Malik");
-			preparedStatement.setString(4, "nuhamal@gmail.com");
-			preparedStatement.setString(5, "Female");
-			preparedStatement.setString(6, "70");
+			preparedStatement.setString(1, "root@gmail.com");
+			preparedStatement.setString(2, "designer waterbottle");
+			preparedStatement.setString(3, "bougee");
+			preparedStatement.setString(4, "2019-11-06");
+			preparedStatement.setDouble(5, 70.00);
+			preparedStatement.setString(6, "food,designer,drink");
 			preparedStatement.executeUpdate();
 			
-			preparedStatement.setString(1, "randomm");
-			preparedStatement.setString(2, "Anika");
-			preparedStatement.setString(3, "Taufiq");
-			preparedStatement.setString(4, "taufiqa@gmail.com");
-			preparedStatement.setString(5, "Female");
-			preparedStatement.setString(6, "50");
+			preparedStatement.setString(1, "taufiqa@gmail.com");
+			preparedStatement.setString(2, "socks");
+			preparedStatement.setString(3, "i like socks");
+			preparedStatement.setString(4, "2019-11-06");
+			preparedStatement.setDouble(5, 1.00);
+			preparedStatement.setString(6, "apparel,clothing");
 			preparedStatement.executeUpdate();
 			
-			preparedStatement.setString(1, "gr8Respgr8Pwr");
-			preparedStatement.setString(2, "Tom");
-			preparedStatement.setString(3, "Holland");
-			preparedStatement.setString(4, "imspiderman@gmail.com");
-			preparedStatement.setString(5, "Male");
-			preparedStatement.setString(6, "18");
+			preparedStatement.setString(1, "taufiqa@gmail.com");
+			preparedStatement.setString(2, "FRIENDS mug");
+			preparedStatement.setString(3, "i also like FRIENDS");
+			preparedStatement.setString(4, "2019-12-06");
+			preparedStatement.setDouble(5, 16.00);
+			preparedStatement.setString(6, "food,mug,drink");
 			preparedStatement.executeUpdate();
-			*/
+			
+			preparedStatement.setString(1, "nuhamal@gmail.com");
+			preparedStatement.setString(2, "NOMINAL necklace");
+			preparedStatement.setString(3, "i wear these a lot. i have 75.");
+			preparedStatement.setString(4, "2019-10-13");
+			preparedStatement.setDouble(5, 20.00);
+			preparedStatement.setString(6, "jewelry");
+			preparedStatement.executeUpdate();
+			
+			preparedStatement.setString(1, "nuhamal@gmail.com");
+			preparedStatement.setString(2, "designer hijab");
+			preparedStatement.setString(3, "hard to hear when you are this bougee");
+			preparedStatement.setString(4, "2019-12-05");
+			preparedStatement.setDouble(5, 95.00);
+			preparedStatement.setString(6, "clothing,apparel,deisgner");
+			preparedStatement.executeUpdate();
+			
+			preparedStatement.setString(1, "SRaffi@gmail.com");
+			preparedStatement.setString(2, "MacBook - Gladys");
+			preparedStatement.setString(3, "comes with a cleaning wipe named Agnus!");
+			preparedStatement.setString(4, "2019-02-13");
+			preparedStatement.setDouble(5, 900.00);
+			preparedStatement.setString(6, "electronics,weird names,laptop");
+			preparedStatement.executeUpdate();
+			
+			preparedStatement.setString(1, "imspiderman@gmail.com");
+			preparedStatement.setString(2, "sandwiches");
+			preparedStatement.setString(3, "Delmar has the best sandwiches");
+			preparedStatement.setString(4, "2019-11-30");
+			preparedStatement.setDouble(5, 5.00);
+			preparedStatement.setString(6, "food,sandwiches");
+			preparedStatement.executeUpdate();
+			
+			preparedStatement.setString(1, "taufiqa@gmail.com");
+			preparedStatement.setString(2, "green tea");
+			preparedStatement.setString(3, "only for sophisticated drinkers");
+			preparedStatement.setString(4, "2019-10-20");
+			preparedStatement.setDouble(5, 10.00);
+			preparedStatement.setString(6, "food,drink");
+			preparedStatement.executeUpdate();
+			
+			
 		}catch (Exception e) {
 			System.out.println(e);
 		} finally {

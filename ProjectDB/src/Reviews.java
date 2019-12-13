@@ -1,32 +1,47 @@
+import java.util.Date;
 
 public class Reviews
 {	
+	protected int reviewID; 
 	protected String score;
 	protected String remark;
 	protected int itemID;
 	protected int userID;
-	//protected Date reviewDate;
+	protected String reviewDate;
 
 	public Reviews() 
 	{
 	}
 	
-	public Reviews(int reviewID, String score, String remark, int itemID, int userID)
+	public Reviews(String score, String remark, int itemID, int userID, String reviewDate)
 	{
+		super();
 		this.score = score;
 		this.remark = remark;
 		this.itemID = itemID;
 		this.userID = userID;
+		this.reviewDate = reviewDate;
+	}
+	
+	public Reviews(int reviewID, String score, String remark, int itemID, int userID, String reviewDate)
+	{
+		super();
+		this.reviewID = reviewID;
+		this.score = score;
+		this.remark = remark;
+		this.itemID = itemID;
+		this.userID = userID;
+		this.reviewDate = reviewDate;
 	}
 	
 	public int getReviewID()
 	{
-		return userID;
+		return reviewID;
 	}
 	
 	public void setReviewID(int reviewID)
 	{
-		this.userID = reviewID;
+		this.reviewID = reviewID;
 	}
 	
 	public String getScore()
@@ -67,5 +82,15 @@ public class Reviews
 	public void setUserID(int userID)
 	{
 		this.userID = userID;
+	}
+	
+	public String getReviewDate()
+	{
+		return reviewDate;
+	}
+	
+	public void setReviewDate(String reviewDate)
+	{
+		this.reviewDate = reviewDate;
 	}
 }

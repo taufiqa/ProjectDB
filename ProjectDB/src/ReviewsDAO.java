@@ -48,31 +48,11 @@ public class ReviewsDAO extends HttpServlet {
             }
 			connect = (Connection) DriverManager
 					.getConnection("jdbc:mysql://127.0.0.1:3306/projectdb?"
-					          + "user=root&password=goldPa!nt51");
+					          + "user=john&password=pass1234");
 			System.out.println(connect);
         }
 	}
-/*	
-	public boolean isUserValid(String username, String password) {
-		boolean flag = false;
-		try {
-			connect_func();
-			statement = (Statement) connect.createStatement();
-			
-			String sqlstmt = "SELECT * FROM reviews WHERE email ='" + username + "' AND password = '" + password + "'";
-			ResultSet rs = statement.executeQuery(sqlstmt);
-			
-			if(rs.next())
-				flag = true;
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			close();
-		}
-		
-		return flag; //returns true if user exists returns false if user doesn't exist
-	}
-    */
+
 	public void createDatabase() throws SQLException
 	{
 		try{
@@ -88,10 +68,11 @@ public class ReviewsDAO extends HttpServlet {
 								  " reviewID INTEGER NOT NULL auto_increment," + 
 								  " score VARCHAR(10)," + 
 								  " remark VARCHAR(75)," + 
-								  " itemID integer," + 
-								  " userID integer," + 
-								//  " reviewDate DATE," + 
-								  " PRIMARY KEY (reviewID));";
+								  " itemID integer not null," + 
+								  " userEmail VARCHAR(25)," + 
+								  " reviewDate DATE," + 
+								  " PRIMARY KEY (reviewID)" +
+								  ");";
 			statement.executeUpdate(sqlstmt);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -108,15 +89,15 @@ public class ReviewsDAO extends HttpServlet {
 			
 			statement = connect.createStatement();
 			
-		//	preparedStatement = connect.prepareStatement("insert into reviews(score,remark,itemID,userID, reviewDate) values (?,?,?,?,?)");
-			preparedStatement = connect.prepareStatement("insert into reviews(score,remark,itemID,userID) values (?,?,?,?)");
+			preparedStatement = connect.prepareStatement("insert into reviews(score,remark,itemID,userEmail,reviewDate) values (?,?,?,?,?)");
+		//	preparedStatement = connect.prepareStatement("insert into reviews(score,remark,itemID,userID) values (?,?,?,?)");
 
 			
-			preparedStatement.setString(1, "Five");
+			preparedStatement.setString(1, "Excellent");
 			preparedStatement.setString(2, "Good");
 			preparedStatement.setInt(3, 1);
-			preparedStatement.setInt(4, 1);
-		//	preparedStatement.setString(5, "11-6-2019");
+			preparedStatement.setString(4, "root@gmail.com");
+			preparedStatement.setString(5, "2019-11-06");
 			preparedStatement.executeUpdate();
 			
 		/*	preparedStatement.setString(1, "password");
