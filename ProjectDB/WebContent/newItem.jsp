@@ -7,7 +7,36 @@
 <title>New Item</title>
 </head>
 <body >	
-<h1 style= "background-color:#335B78; color:#C4D8E6; text-align: center">Add New Item</h1> 
+<h1 style="color:#335B78;text-align:center;">ADD A NEW ITEM</h1> 
+
+		<div>
+
+		  <ul>
+		    <li><a href="StorePage.jsp">HOME</a></li>
+		    <li><a href="#">FAVORITES</a>
+		      <ul>
+		        <li><a href="favoriteSellers.jsp">FAVORITE SELLERS</a></li>
+		        <li><a href="favoriteItems.jsp">FAVORITE ITEMS</a></li>
+		      </ul>
+		    </li>
+		    <li><a href="#">QUERIES</a>
+		      <ul>
+		        <li><a href="favoriteSellers.jsp">QUERY 1</a></li>
+		        <li><a href="favoriteItems.jsp">QUERY 2</a></li>
+		        <li><a href="favoriteSellers.jsp">QUERY 3</a></li>
+		        <li><a href="favoriteItems.jsp">QUERY 4</a></li>
+		        <li><a href="favoriteSellers.jsp">QUERY 5</a></li>
+		        <li><a href="favoriteItems.jsp">QUERY 6</a></li>
+		        <li><a href="favoriteSellers.jsp">QUERY 7</a></li>
+		        <li><a href="favoriteItems.jsp">QUERY 8</a></li>
+		        <li><a href="favoriteSellers.jsp">QUERY 9</a></li>
+		      </ul>
+		    </li>
+		    <li><a href="newItem.jsp">NEW ITEM</a></li>
+		   	<li><a href="logout">LOGOUT</a></li>
+		  </ul>
+		</div>
+		
   <form action="newItem" method="POST">
     <table style = "color:#335B78; margin-left:auto; margin-right:auto;" width = "50%" >
     	<tr>
@@ -17,6 +46,10 @@
       <tr>
 	     <th width = "50%">Description:</th>
 		 <td width = "100%"><input type = "text" name = "itemDescription"></td>
+	  </tr>
+	  <tr>
+	     <th width = "50%">Category:</th>
+		 <td width = "100%"><input type = "text" name = "categoryName"></td>
 	  </tr>
 	  <tr>
 	     <th width = "50%">Price:</th>
